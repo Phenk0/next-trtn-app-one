@@ -1,4 +1,10 @@
+import Link from "next/link";
+import Placeholder from "@/components/placeholder";
+import { buttonVariants } from "@/components/ui/button";
+import { TicketsCard } from "@/feature/components/tickets-card";
 import { initialTickets } from "@/lib/data";
+import { ticketsPath } from "@/lib/paths";
+import { cn } from "@/lib/utils";
 
 type TicketPageProps = {
   params: Promise<{ ticketId: string }>;
@@ -10,19 +16,23 @@ export default async function TicketPage({ params }: TicketPageProps) {
 
   if (!ticket) {
     return (
-      <h2 className="text-6xl text-center">Ticket #{ticketId} not found</h2>
+      <Placeholder
+        label={`Ticket #${ticketId} not found`}
+        button={
+          <Link
+            href={ticketsPath}
+            className={cn(buttonVariants({ variant: "outline" }))}
+          >
+            Go to Tickets Page
+          </Link>
+        }
+      />
     );
   }
 
   return (
-    <div className="m-5">
-      <h3 className="text-6xl text-center">{ticket.title}</h3>
-      <p className="text-3xl">{ticket.content}</p>
-      <p
-        className={ticket.status === "OPEN" ? "text-green-400" : "text-red-400"}
-      >
-        Status: {ticket.status}
-      </p>
+    <div className="flex justify-center animate-fade-in-from-top">
+      <TicketsCard ticket={ticket} isDetail />
     </div>
   );
 }

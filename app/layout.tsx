@@ -1,7 +1,24 @@
 import "./globals.css";
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
-import Navigation from "@/app/navigation";
+import {
+  Geist,
+  Geist_Mono,
+  JetBrains_Mono,
+  Merriweather,
+} from "next/font/google";
+import AppHeader from "@/components/appHeader";
+import { ThemeProvider } from "@/components/theme/theme-provider";
+import { cn } from "@/lib/utils";
+
+const merriweatherHeading = Merriweather({
+  subsets: ["latin"],
+  variable: "--font-heading",
+});
+
+const jetbrainsMono = JetBrains_Mono({
+  subsets: ["latin"],
+  variable: "--font-mono",
+});
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -24,14 +41,24 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html
+      suppressHydrationWarning
+      lang="en"
+      className={cn(
+        "font-mono",
+        jetbrainsMono.variable,
+        merriweatherHeading.variable,
+      )}
+    >
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <Navigation />
-        <main className="min-h-screen flex-1 overflow-y-auto overflow-x-hidden py-24 px-8 flex flex-col bg-secondary/20">
-          {children}
-        </main>
+        <ThemeProvider>
+          <AppHeader />
+          <main className="min-h-screen flex-1 overflow-y-auto overflow-x-hidden py-24 px-8 flex flex-col bg-secondary/20">
+            {children}
+          </main>
+        </ThemeProvider>
       </body>
     </html>
   );
