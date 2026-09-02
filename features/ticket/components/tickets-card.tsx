@@ -9,12 +9,15 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { TICKET_ICONS } from "@/feature/constants";
-import { Ticket } from "@/feature/types";
+import { TICKET_ICONS } from "@/features/constants";
+import { Ticket } from "@/generated/prisma/client";
 import { ticketPath } from "@/lib/paths";
 import { cn } from "@/lib/utils";
 
 type TicketCardProps = {
+  //// generic ticket type:
+  // ticket: | Awaited<ReturnType<typeof getTickets>>[number];
+  //         | Awaited<ReturnType<typeof getTicket>>;
   ticket: Ticket;
   isDetail?: boolean;
 };

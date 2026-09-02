@@ -1,10 +1,6 @@
-import Link from "next/link";
-import Placeholder from "@/components/placeholder";
-import { buttonVariants } from "@/components/ui/button";
-import { TicketsCard } from "@/feature/components/tickets-card";
-import { initialTickets } from "@/lib/data";
-import { ticketsPath } from "@/lib/paths";
-import { cn } from "@/lib/utils";
+import { notFound } from "next/navigation";
+import { TicketsCard } from "@/features/ticket/components/tickets-card";
+import { getTicket } from "@/features/ticket/queries/get-ticket";
 
 type TicketPageProps = {
   params: Promise<{ ticketId: string }>;
@@ -12,23 +8,9 @@ type TicketPageProps = {
 
 export default async function TicketPage({ params }: TicketPageProps) {
   const { ticketId } = await params;
-  const ticket = initialTickets.find((ticket) => ticket.id === ticketId);
+  const ticket = await getTicket(ticketId);
 
-  if (!ticket) {
-    return (
-      <Placeholder
-        label={`Ticket #${ticketId} not found`}
-        button={
-          <Link
-            href={ticketsPath}
-            className={cn(buttonVariants({ variant: "outline" }))}
-          >
-            Go to Tickets Page
-          </Link>
-        }
-      />
-    );
-  }
+  if (!ticket) notFound();
 
   return (
     <div className="flex justify-center animate-fade-in-from-top">
