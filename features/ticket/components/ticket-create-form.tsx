@@ -8,10 +8,21 @@ function TicketCreateForm() {
   return (
     <form action={createTicket} className="flex flex-col gap-y-2">
       <Label htmlFor="title">Title</Label>
-      <Input id="title" name="title" type="text" required />
+      <Input
+        id="title"
+        name="title"
+        type="text"
+        aria-label="Input title"
+        required
+      />
 
       <Label htmlFor="content">Content</Label>
-      <Textarea id="content" name="content" required />
+      <Textarea
+        id="content"
+        name="content"
+        aria-label="Input content"
+        required
+      />
 
       <Button type="submit">Create</Button>
     </form>
