@@ -1,4 +1,7 @@
-import { Button } from "@/components/ui/button";
+"use client";
+
+import { useActionState } from "react";
+import { SubmitButton } from "@/components/form/submit-button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
@@ -10,11 +13,12 @@ type TicketUpsertFormProps = {
 };
 
 function TicketUpsertForm({ ticket }: TicketUpsertFormProps) {
+  const [actionState, action] = useActionState(
+    upsertTicket.bind(null, ticket?.id),
+    { message: "" },
+  );
   return (
-    <form
-      action={upsertTicket.bind(null, ticket?.id)}
-      className="flex flex-col gap-y-2"
-    >
+    <form action={action} className="flex flex-col gap-y-2">
       <Label htmlFor="title">Title</Label>
       <Input
         id="title"
@@ -32,7 +36,9 @@ function TicketUpsertForm({ ticket }: TicketUpsertFormProps) {
         required
       />
 
-      <Button type="submit">{ticket ? "Edit" : "Create"}</Button>
+      <SubmitButton label={ticket ? "Edit" : "Create"} />
+
+      {actionState?.message && <p>{actionState.message}</p>}
     </form>
   );
 }
