@@ -2,27 +2,25 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { updateTicket } from "@/features/ticket/actions/update-ticket";
+import { upsertTicket } from "@/features/ticket/actions/upsert-ticket";
 import { Ticket } from "@/generated/prisma/client";
 
-type TicketUpdateFormProps = {
-  ticket: Ticket;
+type TicketUpsertFormProps = {
+  ticket?: Ticket;
 };
 
-function TicketUpdateForm({ ticket }: TicketUpdateFormProps) {
+function TicketUpsertForm({ ticket }: TicketUpsertFormProps) {
   return (
     <form
-      action={updateTicket.bind(null, ticket.id)}
+      action={upsertTicket.bind(null, ticket?.id)}
       className="flex flex-col gap-y-2"
     >
-      <Input type="hidden" name="id" value={ticket.id} />
-
       <Label htmlFor="title">Title</Label>
       <Input
         id="title"
         name="title"
         type="text"
-        defaultValue={ticket.title}
+        defaultValue={ticket?.title}
         required
       />
 
@@ -30,13 +28,13 @@ function TicketUpdateForm({ ticket }: TicketUpdateFormProps) {
       <Textarea
         id="content"
         name="content"
-        defaultValue={ticket.content}
+        defaultValue={ticket?.content}
         required
       />
 
-      <Button type="submit">Update</Button>
+      <Button type="submit">{ticket ? "Edit" : "Create"}</Button>
     </form>
   );
 }
 
-export { TicketUpdateForm };
+export { TicketUpsertForm };
