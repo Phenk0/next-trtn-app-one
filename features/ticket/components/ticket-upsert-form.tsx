@@ -24,7 +24,9 @@ function TicketUpsertForm({ ticket }: TicketUpsertFormProps) {
         id="title"
         name="title"
         type="text"
-        defaultValue={ticket?.title}
+        defaultValue={
+          (actionState.payload?.get("title") as string) ?? ticket?.title
+        }
         required
       />
 
@@ -32,7 +34,9 @@ function TicketUpsertForm({ ticket }: TicketUpsertFormProps) {
       <Textarea
         id="content"
         name="content"
-        defaultValue={ticket?.content}
+        defaultValue={
+          (actionState.payload?.get("content") as string) ?? ticket?.content
+        }
         required
       />
 
