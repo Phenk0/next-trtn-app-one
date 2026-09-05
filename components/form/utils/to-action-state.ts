@@ -4,7 +4,7 @@ type ActionState = {
   status?: "SUCCESS" | "ERROR";
   message: string;
   payload?: FormData;
-  fieldErrors: Record<string, string[]>;
+  fieldErrors: Record<string, string[]> | undefined;
   timestamp: number;
 };
 
@@ -24,7 +24,7 @@ const fromErrorToActionState: FromErrorToActionStateFn = (error, formData) => {
     const flattened = z.flattenError(error); //the way to get errors object with field names
     return {
       status: "ERROR",
-      message: "",
+      message: "Validation failed",
       fieldErrors: flattened.fieldErrors,
       payload: formData,
       timestamp: Date.now(),
