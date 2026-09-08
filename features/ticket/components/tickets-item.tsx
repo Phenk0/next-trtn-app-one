@@ -10,6 +10,7 @@ import {
   Card,
   CardContent,
   CardDescription,
+  CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
@@ -18,6 +19,7 @@ import { deleteTicket } from "@/features/ticket/actions/delete-ticket";
 import { Ticket } from "@/generated/prisma/client";
 import { ticketEditPath, ticketPath } from "@/lib/paths";
 import { cn } from "@/lib/utils";
+import { toCurrencyFromCents } from "@/utils/currency";
 
 type TicketCardProps = {
   //// generic ticket type:
@@ -84,6 +86,12 @@ export function TicketsItem({ ticket, isDetail }: TicketCardProps) {
             {ticket.content}
           </CardDescription>
         </CardContent>
+        <CardFooter className="flex justify-between">
+          <p className="text-sm text-muted-foreground">{ticket.deadline}</p>
+          <p className="text-sm text-muted-foreground">
+            {toCurrencyFromCents(ticket.bounty)}
+          </p>
+        </CardFooter>
       </Card>
       <div className="flex flex-col gap-y-1">
         {!isDetail ? (

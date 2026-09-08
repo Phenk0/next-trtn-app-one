@@ -10,6 +10,7 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { upsertTicket } from "@/features/ticket/actions/upsert-ticket";
 import { Ticket } from "@/generated/prisma/client";
+import { fromCentToDollar } from "@/utils/currency";
 
 type TicketUpsertFormProps = {
   ticket?: Ticket;
@@ -45,7 +46,36 @@ function TicketUpsertForm({ ticket }: TicketUpsertFormProps) {
         required
       />
       <FieldError actionState={actionState} fieldName="content" />
-
+      <div className="flex flex-row gap-2 justify-between">
+        <div>
+          <Label htmlFor="deadline">Deadline</Label>
+          <Input
+            id="deadline"
+            type="date"
+            name="deadline"
+            defaultValue={
+              (actionState.payload?.get("deadline") as string) ??
+              ticket?.deadline
+            }
+          />
+          <FieldError actionState={actionState} fieldName="deadline" />
+        </div>
+        <div>
+          <Label htmlFor="bounty">Bounty ($)</Label>
+          <Input
+            id="bounty"
+            type="number"
+            step="0.01"
+            name="bounty"
+            placeholder="0.00"
+            defaultValue={
+              (actionState.payload?.get("bounty") as string) ??
+              (ticket?.bounty ? fromCentToDollar(ticket.bounty) : "")
+            }
+          />
+          <FieldError actionState={actionState} fieldName="bounty" />
+        </div>
+      </div>
       <SubmitButton label={ticket ? "Edit" : "Create"} />
     </Form>
   );

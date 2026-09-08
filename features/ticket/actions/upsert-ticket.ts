@@ -11,10 +11,13 @@ import {
 } from "@/components/form/utils/to-action-state";
 import { ticketPath, ticketsPath } from "@/lib/paths";
 import { prisma } from "@/lib/prisma";
+import { toCent } from "@/utils/currency";
 
 const upsertTicketSchema = z.object({
   title: z.string().min(3).max(191),
   content: z.string().min(10).max(1024),
+  deadline: z.string().regex(/^\d{4}-\d{2}-\d{2}$/, "Is required"),
+  bounty: z.coerce.number().positive(),
 });
 
 const upsertTicket = async (
@@ -26,12 +29,19 @@ const upsertTicket = async (
     const data = upsertTicketSchema.parse({
       title: formData.get("title"),
       content: formData.get("content"),
+      deadline: formData.get("deadline"),
+      bounty: formData.get("bounty"),
     });
+
+    const dbDate = {
+      ...data,
+      bounty: toCent(data.bounty),
+    };
 
     await prisma.ticket.upsert({
       where: { id: id || "" },
-      create: data,
-      update: data,
+      create: dbDate,
+      update: dbDate,
     });
   } catch (error) {
     return fromErrorToActionState(error, formData);
