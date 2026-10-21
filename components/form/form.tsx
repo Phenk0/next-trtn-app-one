@@ -6,8 +6,16 @@ type FormProps = {
   action: (payload: FormData) => void;
   actionState: ActionState;
   children: React.ReactNode;
+  onSuccess?: (actionState: ActionState) => void;
+  onError?: (actionState: ActionState) => void;
 };
-function Form({ action, actionState, children }: FormProps) {
+function Form({
+  action,
+  actionState,
+  onSuccess,
+  onError,
+  children,
+}: FormProps) {
   useActionFeedback(actionState, {
     onSuccess: ({ actionState }) => {
       if (actionState.message) {
@@ -17,6 +25,7 @@ function Form({ action, actionState, children }: FormProps) {
           description: actionState.message,
         });
       }
+      onSuccess?.(actionState); // this is a conditional [fn] call
     },
     onError: ({ actionState }) => {
       if (actionState.message) {
@@ -26,6 +35,7 @@ function Form({ action, actionState, children }: FormProps) {
           description: actionState.message,
         });
       }
+      onError?.(actionState); // this is a conditional [fn] call
     },
   });
 

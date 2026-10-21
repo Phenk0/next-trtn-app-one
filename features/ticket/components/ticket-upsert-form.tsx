@@ -1,6 +1,10 @@
 "use client";
 
-import { useActionState } from "react";
+import { useActionState, useRef } from "react";
+import {
+  DatePicker,
+  DatePickerImperativeHandle,
+} from "@/components/date-picker";
 import { FieldError } from "@/components/form/field-error";
 import { Form } from "@/components/form/form";
 import { SubmitButton } from "@/components/form/submit-button";
@@ -22,8 +26,15 @@ function TicketUpsertForm({ ticket }: TicketUpsertFormProps) {
     EMPTY_ACTION_STATE,
   );
 
+  const datePickerImperativeHandleRef =
+    useRef<DatePickerImperativeHandle>(null);
+
+  const handleSuccess = () => {
+    datePickerImperativeHandleRef.current?.reset();
+  };
+
   return (
-    <Form action={action} actionState={actionState}>
+    <Form action={action} actionState={actionState} onSuccess={handleSuccess}>
       <Label htmlFor="title">Title</Label>
       <Input
         id="title"
@@ -46,21 +57,23 @@ function TicketUpsertForm({ ticket }: TicketUpsertFormProps) {
         required
       />
       <FieldError actionState={actionState} fieldName="content" />
-      <div className="flex flex-row gap-2 justify-between">
-        <div>
+
+      <div className="flex gap-x-2 mb-1">
+        <div className="w-1/2">
           <Label htmlFor="deadline">Deadline</Label>
-          <Input
+          <DatePicker
+            // key={actionState.timestamp}
             id="deadline"
-            type="date"
             name="deadline"
             defaultValue={
               (actionState.payload?.get("deadline") as string) ??
               ticket?.deadline
             }
+            imperativeHandleRef={datePickerImperativeHandleRef}
           />
           <FieldError actionState={actionState} fieldName="deadline" />
         </div>
-        <div>
+        <div className="w-1/2">
           <Label htmlFor="bounty">Bounty ($)</Label>
           <Input
             id="bounty"
