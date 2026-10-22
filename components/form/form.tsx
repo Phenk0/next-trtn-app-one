@@ -20,9 +20,8 @@ function Form({
     onSuccess: ({ actionState }) => {
       if (actionState.message) {
         toast.add({
-          // title: `Ticket ${ticket ? "editing" : "creating"}`,
           type: "success",
-          description: actionState.message,
+          title: actionState.message,
         });
       }
       onSuccess?.(actionState); // this is a conditional [fn] call
@@ -32,7 +31,7 @@ function Form({
         toast.add({
           // title: `Ticket ${ticket ? "editing" : "creating"}`,
           type: "error",
-          description: actionState.message,
+          title: actionState.message,
         });
       }
       onError?.(actionState); // this is a conditional [fn] call

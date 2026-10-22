@@ -10,7 +10,7 @@ type ActionState = {
 
 type FromErrorToActionStateFn = (
   error: unknown,
-  formData: FormData,
+  formData?: FormData,
 ) => ActionState;
 
 const EMPTY_ACTION_STATE: ActionState = {

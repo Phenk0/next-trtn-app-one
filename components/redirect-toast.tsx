@@ -14,7 +14,7 @@ const RedirectToast = () => {
 
       toast.add({
         type: "success",
-        description: message,
+        title: message,
       });
       await deleteCookieByKey("toast");
     };

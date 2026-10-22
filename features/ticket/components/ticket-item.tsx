@@ -1,6 +1,7 @@
 import { clsx } from "clsx";
 import {
   LucideEdit,
+  LucideMoreVertical,
   LucideSquareArrowOutUpRight,
   LucideTrash,
 } from "lucide-react";
@@ -16,6 +17,7 @@ import {
 } from "@/components/ui/card";
 import { TICKET_ICONS } from "@/features/constants";
 import { deleteTicket } from "@/features/ticket/actions/delete-ticket";
+import { TicketMoreMenu } from "@/features/ticket/components/ticket-more-menu";
 import { Ticket } from "@/generated/prisma/client";
 import { ticketEditPath, ticketPath } from "@/lib/paths";
 import { cn } from "@/lib/utils";
@@ -29,8 +31,8 @@ type TicketCardProps = {
   isDetail?: boolean;
 };
 
-export function TicketsItem({ ticket, isDetail }: TicketCardProps) {
-  const DetailButton = () => (
+export function TicketItem({ ticket, isDetail }: TicketCardProps) {
+  const detailButton = (
     <Link
       prefetch
       href={ticketPath(ticket.id)}
@@ -40,17 +42,16 @@ export function TicketsItem({ ticket, isDetail }: TicketCardProps) {
     </Link>
   );
 
-  const EditButton = () => (
+  const editButton = (
     <Link
       prefetch
       href={ticketEditPath(ticket.id)}
-      className={cn(buttonVariants({ variant: "secondary", size: "icon" }))}
+      className={cn(buttonVariants({ variant: "outline", size: "icon" }))}
     >
       <LucideEdit />
     </Link>
   );
-
-  const DeleteButton = () => (
+  const deleteButton = (
     <form action={deleteTicket.bind(null, ticket.id)}>
       <Button
         variant="destructive"
@@ -61,6 +62,17 @@ export function TicketsItem({ ticket, isDetail }: TicketCardProps) {
         <LucideTrash />
       </Button>
     </form>
+  );
+
+  const moreMenu = (
+    <TicketMoreMenu
+      ticket={ticket}
+      trigger={
+        <Button size="icon" variant="outline" aria-label="More menu">
+          <LucideMoreVertical />
+        </Button>
+      }
+    />
   );
 
   return (
@@ -95,11 +107,17 @@ export function TicketsItem({ ticket, isDetail }: TicketCardProps) {
       </Card>
       <div className="flex flex-col gap-y-1">
         {!isDetail ? (
-          <DetailButton />
+          <>
+            {detailButton}
+            {editButton}
+            {deleteButton}
+            {moreMenu}
+          </>
         ) : (
           <>
-            <EditButton />
-            <DeleteButton />
+            {editButton}
+            {deleteButton}
+            {moreMenu}
           </>
         )}
       </div>
