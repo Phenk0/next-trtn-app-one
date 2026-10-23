@@ -3,7 +3,6 @@ import {
   LucideEdit,
   LucideMoreVertical,
   LucideSquareArrowOutUpRight,
-  LucideTrash,
 } from "lucide-react";
 import Link from "next/link";
 import { Button, buttonVariants } from "@/components/ui/button";
@@ -16,7 +15,6 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { TICKET_ICONS } from "@/features/constants";
-import { deleteTicket } from "@/features/ticket/actions/delete-ticket";
 import { TicketMoreMenu } from "@/features/ticket/components/ticket-more-menu";
 import { Ticket } from "@/generated/prisma/client";
 import { ticketEditPath, ticketPath } from "@/lib/paths";
@@ -50,18 +48,6 @@ export function TicketItem({ ticket, isDetail }: TicketCardProps) {
     >
       <LucideEdit />
     </Link>
-  );
-  const deleteButton = (
-    <form action={deleteTicket.bind(null, ticket.id)}>
-      <Button
-        variant="destructive"
-        size="icon"
-        aria-label="Delete ticket"
-        type="submit"
-      >
-        <LucideTrash />
-      </Button>
-    </form>
   );
 
   const moreMenu = (
@@ -110,13 +96,11 @@ export function TicketItem({ ticket, isDetail }: TicketCardProps) {
           <>
             {detailButton}
             {editButton}
-            {deleteButton}
             {moreMenu}
           </>
         ) : (
           <>
             {editButton}
-            {deleteButton}
             {moreMenu}
           </>
         )}

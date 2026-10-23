@@ -1,7 +1,7 @@
 import { z, ZodError } from "zod";
 
 type ActionState = {
-  status?: "SUCCESS" | "ERROR";
+  status: "SUCCESS" | "ERROR" | "DEFAULT";
   message: string;
   payload?: FormData;
   fieldErrors: Record<string, string[]> | undefined;
@@ -14,6 +14,7 @@ type FromErrorToActionStateFn = (
 ) => ActionState;
 
 const EMPTY_ACTION_STATE: ActionState = {
+  status: "DEFAULT",
   message: "",
   fieldErrors: {},
   timestamp: Date.now(),
@@ -48,10 +49,12 @@ const fromErrorToActionState: FromErrorToActionStateFn = (error, formData) => {
   }
 };
 
-const toActionState = (
+type ToActionStateFn = (
   status: ActionState["status"],
   message: string,
-): ActionState => ({
+) => ActionState;
+
+const toActionState: ToActionStateFn = (status, message) => ({
   status,
   message,
   fieldErrors: {},

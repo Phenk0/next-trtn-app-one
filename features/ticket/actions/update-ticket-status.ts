@@ -5,10 +5,10 @@ import {
   fromErrorToActionState,
   toActionState,
 } from "@/components/form/utils/to-action-state";
+import { Prisma } from "@/generated/prisma/client";
 import { TicketStatus } from "@/generated/prisma/enums";
 import { ticketsPath } from "@/lib/paths";
 import { prisma } from "@/lib/prisma";
-import { Prisma } from "@/generated/prisma/client";
 
 const updateTicketStatus = async (id: string, status: TicketStatus) => {
   try {
