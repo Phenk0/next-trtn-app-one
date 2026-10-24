@@ -29,7 +29,9 @@ function CardCompact({
         <CardDescription>{description}</CardDescription>
       </CardHeader>
       <CardContent>{content}</CardContent>
-      {footer && <CardFooter>{footer}</CardFooter>}
+      {footer && (
+        <CardFooter className="flex justify-between gap-2">{footer}</CardFooter>
+      )}
     </Card>
   );
 }

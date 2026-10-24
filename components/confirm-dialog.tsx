@@ -77,7 +77,7 @@ function useConfirmDialog({
             actionState={actionState}
             onSuccess={handleSuccess}
           >
-            <SubmitButton label="Confirm" className="w-full" />
+            <SubmitButton label="Confirm" />
           </Form>
         </AlertDialogFooter>
       </AlertDialogContent>

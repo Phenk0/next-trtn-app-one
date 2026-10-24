@@ -1,11 +1,38 @@
-import { LucideKanban } from "lucide-react";
+import { LucideKanban, LucideLogOut } from "lucide-react";
 import Link from "next/link";
+import { SubmitButton } from "@/components/form/submit-button";
 import { ThemeSwitcher } from "@/components/theme/theme-switcher";
 import { buttonVariants } from "@/components/ui/button";
-import { homePath, ticketsPath } from "@/lib/paths";
+import { signOut } from "@/features/auth/actions/sign-out";
+import { homePath, signInPath, signUpPath, ticketsPath } from "@/lib/paths";
 import { cn } from "@/lib/utils";
 
 export default function AppHeader() {
+  const navItems = (
+    <>
+      <Link href={ticketsPath} className={cn(buttonVariants())}>
+        Tickets
+      </Link>
+      <Link
+        href={signUpPath}
+        className={cn(buttonVariants({ variant: "outline" }))}
+      >
+        Sign Up
+      </Link>
+      <Link
+        href={signInPath}
+        className={cn(buttonVariants({ variant: "outline" }))}
+      >
+        Sign In
+      </Link>
+      <form action={signOut}>
+        <SubmitButton
+          label="Sign Out"
+          icon={<LucideLogOut className="h-8 w-8" />}
+        />
+      </form>
+    </>
+  );
   return (
     <nav className="supports-backdrop-filter:bg-background/60 fixed left-0 right-0 top-0 z-20 border-b bg-background/95 backdrop-blur w-full flex py-2.5 px-5 justify-between items-center">
       <div className="flex items-center gap-x-2">
@@ -19,9 +46,7 @@ export default function AppHeader() {
       </div>
       <div className="flex items-center gap-x-2">
         <ThemeSwitcher />
-        <Link href={ticketsPath} className={cn(buttonVariants())}>
-          Tickets
-        </Link>
+        {navItems}
       </div>
     </nav>
   );

@@ -11,6 +11,23 @@ generator client {
 datasource db {
   provider = "postgresql"
 }
+model User {
+  id           String    @id @default(cuid())
+  username     String    @unique
+  email        String    @unique
+  passwordHash String
+  sessions     Session[]
+  // tickets      Ticket[]
+}
+
+model Session {
+  id        String   @id
+  expiresAt DateTime
+  userId    String
+  user      User     @relation(references: [id], fields: [userId], onDelete: Cascade)
+
+  @@index([userId])
+}
 
 model Ticket {
   id        String       @id @default(cuid())
@@ -21,6 +38,8 @@ model Ticket {
   status    TicketStatus @default(OPEN)
   deadline  String
   bounty    Int
+  // user      User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  // userId    String
 }
 
 enum TicketStatus {

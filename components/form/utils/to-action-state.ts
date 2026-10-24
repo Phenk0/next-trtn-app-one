@@ -23,6 +23,7 @@ const EMPTY_ACTION_STATE: ActionState = {
 const fromErrorToActionState: FromErrorToActionStateFn = (error, formData) => {
   if (error instanceof ZodError) {
     const flattened = z.flattenError(error); //the way to get errors object with field names
+    console.log(flattened);
     return {
       status: "ERROR",
       message: "Validation failed",
@@ -52,14 +53,19 @@ const fromErrorToActionState: FromErrorToActionStateFn = (error, formData) => {
 type ToActionStateFn = (
   status: ActionState["status"],
   message: string,
+  formData?: FormData,
 ) => ActionState;
 
-const toActionState: ToActionStateFn = (status, message) => ({
-  status,
-  message,
-  fieldErrors: {},
-  timestamp: Date.now(),
-});
+const toActionState: ToActionStateFn = (status, message, formData) => {
+  console.log("toActionState", formData);
+  return {
+    status,
+    message,
+    payload: formData,
+    fieldErrors: {},
+    timestamp: Date.now(),
+  };
+};
 
 export { EMPTY_ACTION_STATE, fromErrorToActionState, toActionState };
 export type { ActionState };

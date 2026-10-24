@@ -6,7 +6,6 @@ import {
   JetBrains_Mono,
   Merriweather,
 } from "next/font/google";
-import AppHeader from "@/components/appHeader";
 import { ThemeProvider } from "@/components/theme/theme-provider";
 import { Toaster } from "@/components/ui/toast";
 import { cn } from "@/lib/utils";
@@ -55,10 +54,7 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <ThemeProvider>
-          <AppHeader />
-          <main className="min-h-screen flex-1 overflow-y-auto overflow-x-hidden py-24 px-8 flex flex-col bg-secondary/20">
-            {children}
-          </main>
+          {children}
           <Toaster />
         </ThemeProvider>
       </body>

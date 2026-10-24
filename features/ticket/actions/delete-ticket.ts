@@ -18,7 +18,6 @@ const deleteTicket = async (ticketId: string, pathname: string) => {
       error instanceof Prisma.PrismaClientKnownRequestError &&
       error.code === "P2025"
     ) {
-      console.log(error);
       return toActionState(
         "ERROR" as const,
         "This ticket no longer exists. It may have been deleted.",
