@@ -10,7 +10,7 @@ const signOut = async () => {
   const { session } = await getAuth();
 
   if (!session) {
-    redirect(signInPath);
+    redirect("/");
   }
 
   await invalidateSession(session.id);

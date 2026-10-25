@@ -1,3 +1,5 @@
+"use server";
+
 import { cookies } from "next/headers";
 import { cache } from "react";
 import { SESSION_COOKIE_NAME } from "@/features/auth/utils/session-cookie";

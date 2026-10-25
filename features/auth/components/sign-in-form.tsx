@@ -18,6 +18,7 @@ const SignInForm = () => {
         type="email"
         placeholder="Email"
         defaultValue={actionState.payload?.get("email") as string}
+        autoFocus
       />
       <FieldError actionState={actionState} fieldName="email" />
 
