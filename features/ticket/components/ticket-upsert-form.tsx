@@ -13,11 +13,13 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { upsertTicket } from "@/features/ticket/actions/upsert-ticket";
-import { Ticket } from "@/generated/prisma/client";
+import { Prisma } from "@/generated/prisma/client";
 import { fromCentToDollar } from "@/utils/currency";
 
 type TicketUpsertFormProps = {
-  ticket?: Ticket;
+  ticket?: Prisma.TicketGetPayload<{
+    include: { user: { select: { username: true } } };
+  }>;
 };
 
 function TicketUpsertForm({ ticket }: TicketUpsertFormProps) {
