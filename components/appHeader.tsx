@@ -16,7 +16,7 @@ export default function AppHeader() {
 
   if (!isFetched) return;
 
-  const navItems = !user ? (
+  const navItems = user ? (
     <>
       <Link href={ticketsPath} className={cn(buttonVariants())}>
         Tickets
