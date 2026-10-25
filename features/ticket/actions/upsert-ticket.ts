@@ -9,7 +9,8 @@ import {
   fromErrorToActionState,
   toActionState,
 } from "@/components/form/utils/to-action-state";
-import { ticketPath, ticketsPath } from "@/lib/paths";
+import { getAuth } from "@/features/auth/queries/get-auth";
+import { signInPath, ticketPath, ticketsPath } from "@/lib/paths";
 import { prisma } from "@/lib/prisma";
 import { toCent } from "@/utils/currency";
 
@@ -25,6 +26,9 @@ const upsertTicket = async (
   _actionState: ActionState,
   formData: FormData,
 ) => {
+  const { user } = await getAuth();
+  if (!user) redirect(signInPath);
+
   try {
     const data = upsertTicketSchema.parse({
       title: formData.get("title"),
@@ -40,7 +44,7 @@ const upsertTicket = async (
 
     await prisma.ticket.upsert({
       where: { id: id || "" },
-      create: dbData,
+      create: { ...dbData, userId: user.id },
       update: dbData,
     });
   } catch (error) {
