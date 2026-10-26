@@ -10,10 +10,10 @@ import {
   toActionState,
 } from "@/components/form/utils/to-action-state";
 import { getAuthOrRedirect } from "@/features/auth/queries/get-auth-or-redirect";
+import { isOwner } from "@/features/auth/utils/is-owner";
 import { ticketPath, ticketsPath } from "@/lib/paths";
 import { prisma } from "@/lib/prisma";
 import { toCent } from "@/utils/currency";
-import { isOwner } from "@/features/auth/utils/is-owner";
 
 const upsertTicketSchema = z.object({
   title: z.string().min(3).max(191),

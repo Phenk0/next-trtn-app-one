@@ -1,20 +1,19 @@
-import Link from "next/link";
+import { Suspense } from "react";
 import Heading from "@/components/heading";
-import { ticketsPath } from "@/lib/paths";
+import { Spinner } from "@/components/spinner";
+import { TicketList } from "@/features/ticket/components/ticket-list";
 
-export default function Home() {
+export default function HomePage() {
   return (
     <div className="flex-1 flex flex-col gap-y-8">
       <Heading
-        title="Home"
-        description="Your journey to mastering Next.js begins here."
+        title="All Tickets"
+        description="Tickets created by you and others"
       />
 
-      <div className="flex-1 flex flex-col items-center">
-        <Link href={ticketsPath} className="underline">
-          Go to Tickets
-        </Link>
-      </div>
+      <Suspense fallback={<Spinner />}>
+        <TicketList />
+      </Suspense>
     </div>
   );
 }

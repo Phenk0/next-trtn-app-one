@@ -6,11 +6,11 @@ import {
   fromErrorToActionState,
   toActionState,
 } from "@/components/form/utils/to-action-state";
+import { getAuthOrRedirect } from "@/features/auth/queries/get-auth-or-redirect";
+import { isOwner } from "@/features/auth/utils/is-owner";
 import { Prisma } from "@/generated/prisma/client";
 import { ticketsPath } from "@/lib/paths";
 import { prisma } from "@/lib/prisma";
-import { getAuthOrRedirect } from "@/features/auth/queries/get-auth-or-redirect";
-import { isOwner } from "@/features/auth/utils/is-owner";
 
 const deleteTicket = async (ticketId: string, pathname: string) => {
   const { user } = await getAuthOrRedirect();

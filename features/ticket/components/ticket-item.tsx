@@ -14,14 +14,14 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { getAuth } from "@/features/auth/queries/get-auth";
+import { isOwner } from "@/features/auth/utils/is-owner";
 import { TICKET_ICONS } from "@/features/constants";
 import { TicketMoreMenu } from "@/features/ticket/components/ticket-more-menu";
 import { Prisma } from "@/generated/prisma/client";
 import { ticketEditPath, ticketPath } from "@/lib/paths";
 import { cn } from "@/lib/utils";
 import { toCurrencyFromCents } from "@/utils/currency";
-import { getAuth } from "@/features/auth/queries/get-auth";
-import { isOwner } from "@/features/auth/utils/is-owner";
 
 type TicketCardProps = {
   //// generic ticket type:
