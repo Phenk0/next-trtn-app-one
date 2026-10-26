@@ -1,26 +1,21 @@
-"use client";
-
 import Link from "next/link";
-import { usePathname } from "next/navigation";
 import { closedClassName } from "@/components/sidebar/constants";
 import { NavItem } from "@/components/sidebar/types";
 import { buttonVariants } from "@/components/ui/button";
+import { Separator } from "@/components/ui/separator";
 import { cn } from "@/lib/utils";
 
 type SidebarItemProps = {
   isOpen: boolean;
-  isActive?: boolean;
+  isActive: boolean;
   navItem: NavItem;
 };
 
-const SidebarItem = ({ isOpen, navItem }: SidebarItemProps) => {
-  const pathName = usePathname();
-  const isActive = pathName === navItem.href;
-
+const SidebarItem = ({ isOpen, navItem, isActive }: SidebarItemProps) => {
   const Icon = navItem.icon;
   return (
     <>
-      {/*{navItem.separator && <Separator />}*/}
+      {navItem.separator && <Separator />}
       <Link
         href={navItem.href}
         className={cn(
