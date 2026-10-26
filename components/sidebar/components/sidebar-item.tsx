@@ -1,0 +1,47 @@
+"use client";
+
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { closedClassName } from "@/components/sidebar/constants";
+import { NavItem } from "@/components/sidebar/types";
+import { buttonVariants } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
+
+type SidebarItemProps = {
+  isOpen: boolean;
+  isActive?: boolean;
+  navItem: NavItem;
+};
+
+const SidebarItem = ({ isOpen, navItem }: SidebarItemProps) => {
+  const pathName = usePathname();
+  const isActive = pathName === navItem.href;
+
+  const Icon = navItem.icon;
+  return (
+    <>
+      {/*{navItem.separator && <Separator />}*/}
+      <Link
+        href={navItem.href}
+        className={cn(
+          buttonVariants({ variant: "ghost" }),
+          "group relative flex h-12 justify-start",
+          isActive && "bg-muted font-bold hover:bg-muted",
+        )}
+      >
+        <Icon className="size-4.5" />
+        <span
+          className={cn(
+            "absolute left-12 text-base duration-200",
+            isOpen ? "md:block hidden" : "w-17",
+            !isOpen && closedClassName,
+          )}
+        >
+          {navItem.title}
+        </span>
+      </Link>
+    </>
+  );
+};
+
+export { SidebarItem };

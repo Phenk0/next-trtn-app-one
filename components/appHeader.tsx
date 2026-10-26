@@ -7,7 +7,7 @@ import { ThemeSwitcher } from "@/components/theme/theme-switcher";
 import { buttonVariants } from "@/components/ui/button";
 import { signOut } from "@/features/auth/actions/sign-out";
 import { useAuth } from "@/features/auth/hooks/use-auth";
-import { homePath, signInPath, signUpPath, ticketsPath } from "@/lib/paths";
+import { homePath, signInPath, signUpPath } from "@/lib/paths";
 import { cn } from "@/lib/utils";
 
 export default function AppHeader() {
@@ -17,18 +17,13 @@ export default function AppHeader() {
   if (!isFetched) return;
 
   const navItems = user ? (
-    <>
-      <Link href={ticketsPath} className={cn(buttonVariants())}>
-        Tickets
-      </Link>
-      <form action={signOut}>
-        <SubmitButton
-          label="Sign Out"
-          icon={<LucideLogOut className="h-8 w-8" />}
-          variant="outline"
-        />
-      </form>
-    </>
+    <form action={signOut}>
+      <SubmitButton
+        label="Sign Out"
+        icon={<LucideLogOut className="size-4.5" />}
+        variant="outline"
+      />
+    </form>
   ) : (
     <>
       <Link
@@ -50,7 +45,7 @@ export default function AppHeader() {
           href={homePath}
           className={cn(buttonVariants({ variant: "ghost" }))}
         >
-          <LucideKanban />
+          <LucideKanban className="size-4.5" />
           <h1 className="text-lg font-semibold">TicketBounty</h1>
         </Link>
       </div>
