@@ -41,20 +41,22 @@ export function TicketMoreMenu({ ticket, trigger }: TicketMoreMenuProps) {
     const promiseUpdate = updateTicketStatus(ticket.id, value).then(
       (result) => {
         if (result.status === "ERROR") {
-          throw new Error(result.message);
+          return Promise.reject(new Error(result.message));
         }
         return result;
       },
     );
 
-    await toast.promise(promiseUpdate, {
-      loading: "Updating ticket status…",
-      success: (result) => result.message,
-      error: (error) =>
-        error instanceof Error
-          ? error.message
-          : "Failed to update ticket status.",
-    });
+    await toast
+      .promise(promiseUpdate, {
+        loading: "Updating ticket status…",
+        success: (result) => result.message,
+        error: (error) =>
+          error instanceof Error
+            ? error.message
+            : "Failed to update ticket status.",
+      })
+      .catch(() => undefined);
     // const result = await updateTicketStatus(ticket.id, value);
     // if (result.status === "ERROR") {
     //   toast.add({

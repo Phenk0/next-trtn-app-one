@@ -20,6 +20,8 @@ import { Prisma } from "@/generated/prisma/client";
 import { ticketEditPath, ticketPath } from "@/lib/paths";
 import { cn } from "@/lib/utils";
 import { toCurrencyFromCents } from "@/utils/currency";
+import { getAuth } from "@/features/auth/queries/get-auth";
+import { isOwner } from "@/features/auth/utils/is-owner";
 
 type TicketCardProps = {
   //// generic ticket type:
@@ -31,7 +33,10 @@ type TicketCardProps = {
   isDetail?: boolean;
 };
 
-export function TicketItem({ ticket, isDetail }: TicketCardProps) {
+export async function TicketItem({ ticket, isDetail }: TicketCardProps) {
+  const { user } = await getAuth();
+  const isTicketOwner = isOwner(user, ticket);
+
   const detailButton = (
     <Link
       prefetch
@@ -42,7 +47,7 @@ export function TicketItem({ ticket, isDetail }: TicketCardProps) {
     </Link>
   );
 
-  const editButton = (
+  const editButton = isTicketOwner ? (
     <Link
       prefetch
       href={ticketEditPath(ticket.id)}
@@ -50,9 +55,9 @@ export function TicketItem({ ticket, isDetail }: TicketCardProps) {
     >
       <LucideEdit />
     </Link>
-  );
+  ) : null;
 
-  const moreMenu = (
+  const moreMenu = isTicketOwner ? (
     <TicketMoreMenu
       ticket={ticket}
       trigger={
@@ -61,7 +66,7 @@ export function TicketItem({ ticket, isDetail }: TicketCardProps) {
         </Button>
       }
     />
-  );
+  ) : null;
 
   return (
     <div
@@ -100,7 +105,6 @@ export function TicketItem({ ticket, isDetail }: TicketCardProps) {
           <>
             {detailButton}
             {editButton}
-            {moreMenu}
           </>
         ) : (
           <>
