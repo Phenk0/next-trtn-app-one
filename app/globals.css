@@ -17,6 +17,8 @@
 
   --animate-header-from-top: header-from-top 0.5s ease-out;
 
+  --animate-sidebar-from-left: sidebar-from-left 0.5s ease-out;
+
   --font-heading: var(--font-heading);
 
   --color-sidebar-ring: var(--sidebar-ring);
@@ -109,6 +111,14 @@
   }
   to {
     transform: translateY(0);
+  }
+}
+@keyframes sidebar-from-left {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(0);
   }
 }
 
