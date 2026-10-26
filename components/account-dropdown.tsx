@@ -1,6 +1,5 @@
 import { LucideLock, LucideLogOut, LucideUser } from "lucide-react";
 import Link from "next/link";
-import { SubmitButton } from "@/components/form/submit-button";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import {
   DropdownMenu,
