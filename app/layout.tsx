@@ -6,6 +6,8 @@ import {
   JetBrains_Mono,
   Merriweather,
 } from "next/font/google";
+import AppHeader from "@/components/appHeader";
+import { Sidebar } from "@/components/sidebar/components/sidebar";
 import { ThemeProvider } from "@/components/theme/theme-provider";
 import { Toaster } from "@/components/ui/toast";
 import { cn } from "@/lib/utils";
@@ -54,7 +56,21 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <ThemeProvider>
-          {children}
+          <AppHeader />
+          <div className="flex h-screen overflow-hidden border-collapse">
+            <Sidebar />
+            <main
+              className="
+                min-h-screen flex-1
+                overflow-y-auto overflow-x-hidden
+                py-24 px-8
+                bg-secondary/20
+                flex flex-col
+              "
+            >
+              {children}
+            </main>
+          </div>
           <Toaster />
         </ThemeProvider>
       </body>

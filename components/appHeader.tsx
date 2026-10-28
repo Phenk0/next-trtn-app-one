@@ -13,7 +13,7 @@ export default function AppHeader() {
   // const { user } = await getAuth();  => makes all pages dynamic
   const { user, isFetched } = useAuth();
 
-  if (!isFetched) return;
+  if (!isFetched) return null;
 
   const navItems = user ? (
     <AccountDropdown user={user} />

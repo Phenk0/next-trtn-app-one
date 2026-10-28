@@ -5,7 +5,7 @@ import { homePath } from "@/lib/paths";
 
 export default function PasswordForgotPage() {
   return (
-    <main className="m-4 flex flex-col h-[calc(100vh-2rem)] items-center justify-center">
+    <div className="m-4 flex flex-col h-[calc(100vh-2rem)] items-center justify-center">
       <Heading title="Forgot password?" description="GOOD!" />
       <Button
         variant="outline"
@@ -13,6 +13,6 @@ export default function PasswordForgotPage() {
         className="m-2"
         render={<Link href={homePath}>Go Home</Link>}
       />
-    </main>
+    </div>
   );
 }
