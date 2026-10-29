@@ -6,8 +6,8 @@ import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { accountPasswordPath, accountProfilePath } from "@/lib/paths";
 
 const AccountTabs = () => {
-  const pathName = usePathname();
-  const curPage = pathName.split("/").pop();
+  const pathname = usePathname();
+  const curPage = pathname.split("/").pop();
   return (
     <Tabs value={curPage}>
       <TabsList>
@@ -29,4 +29,5 @@ const AccountTabs = () => {
     </Tabs>
   );
 };
+
 export { AccountTabs };

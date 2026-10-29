@@ -2,8 +2,8 @@
 
 import { usePathname } from "next/navigation";
 import { useState } from "react";
-import { SidebarItem } from "@/components/sidebar/components/sidebar-item";
-import { navItems } from "@/components/sidebar/constants";
+import { SidebarItem } from "@/app/_nav-components/sidebar/components/sidebar-item";
+import { navItems } from "@/app/_nav-components/sidebar/constants";
 import { useAuth } from "@/features/auth/hooks/use-auth";
 import { passwordForgotPath, signInPath, signUpPath } from "@/lib/paths";
 import { cn } from "@/lib/utils";

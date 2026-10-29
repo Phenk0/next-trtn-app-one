@@ -6,8 +6,8 @@ import {
   JetBrains_Mono,
   Merriweather,
 } from "next/font/google";
-import AppHeader from "@/components/appHeader";
-import { Sidebar } from "@/components/sidebar/components/sidebar";
+import AppHeader from "@/app/_nav-components/app-header";
+import { Sidebar } from "@/app/_nav-components/sidebar/components/sidebar";
 import { ThemeProvider } from "@/components/theme/theme-provider";
 import { Toaster } from "@/components/ui/toast";
 import { cn } from "@/lib/utils";
