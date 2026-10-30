@@ -2,7 +2,11 @@ import { createSearchParamsCache, parseAsString } from "nuqs/server";
 
 const searchParser = parseAsString
   .withDefault("")
-  .withOptions({ shallow: false, clearOnDefault: true });
+  .withOptions({
+    shallow: false,
+    clearOnDefault: true,
+    limitUrlUpdates: { method: "debounce", timeMs: 500 },
+  });
 
 const sortParser = {
   sortKey: parseAsString.withDefault("createdAt"),

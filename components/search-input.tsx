@@ -1,24 +1,20 @@
 "use client";
 
-import { debounce, useQueryState } from "nuqs";
 import { Input } from "@/components/ui/input";
-import { searchParser } from "@/features/ticket/search-params-cache";
 
 type SearchInputProps = {
   placeholder: string;
+  value: string;
+  onChange: (value: string) => Promise<URLSearchParams>;
 };
 
-const SearchInput = ({ placeholder }: SearchInputProps) => {
-  const [search, setSearch] = useQueryState("search", searchParser);
-
+const SearchInput = ({ placeholder, value, onChange }: SearchInputProps) => {
   const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) =>
-    setSearch(event.target.value, {
-      limitUrlUpdates: event.target.value === "" ? undefined : debounce(500),
-    });
+    onChange(event.target.value);
 
   return (
     <Input
-      value={search}
+      value={value}
       placeholder={placeholder}
       onChange={handleSearchChange}
     />

@@ -1,6 +1,5 @@
 "use client";
 
-import { useQueryStates } from "nuqs";
 import {
   Select,
   SelectContent,
@@ -9,24 +8,28 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { sortOptions, sortParser } from "@/features/ticket/search-params-cache";
 
 type Option = { label: string; sortKey: string; sortValue: "desc" | "asc" };
 
-interface SortSelectProps {
+type SortObject = {
+  sortKey: string;
+  sortValue: string;
+};
+
+type SortSelectProps = {
   options: Option[];
+  value: SortObject;
+  onChange: (sort: SortObject) => Promise<URLSearchParams>;
   width: string;
-}
+};
 
-const SortSelect = ({ options, width }: SortSelectProps) => {
-  const [sort, setSort] = useQueryStates(sortParser, sortOptions);
-
-  const handleSortChange = async (compositeKey: string | null) => {
+const SortSelect = ({ options, value, onChange, width }: SortSelectProps) => {
+  const handleSortChange = (compositeKey: string | null) => {
     if (!compositeKey) return;
 
     const [sortKey, sortValue] = compositeKey.split("_");
 
-    await setSort({
+    return onChange({
       sortKey,
       sortValue,
     });
@@ -39,7 +42,7 @@ const SortSelect = ({ options, width }: SortSelectProps) => {
   return (
     <Select
       items={items}
-      value={`${sort.sortKey}_${sort.sortValue}`}
+      value={`${value.sortKey}_${value.sortValue}`}
       onValueChange={handleSortChange}
     >
       <SelectTrigger className={`w-${width}`}>
