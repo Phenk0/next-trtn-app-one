@@ -6,6 +6,7 @@ import {
   JetBrains_Mono,
   Merriweather,
 } from "next/font/google";
+import { NuqsAdapter } from "nuqs/adapters/next/app";
 import AppHeader from "@/app/_nav-components/app-header";
 import { Sidebar } from "@/app/_nav-components/sidebar/components/sidebar";
 import { ThemeProvider } from "@/components/theme/theme-provider";
@@ -55,24 +56,26 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <ThemeProvider>
-          <AppHeader />
-          <div className="flex h-screen overflow-hidden border-collapse">
-            <Sidebar />
-            <main
-              className="
+        <NuqsAdapter>
+          <ThemeProvider>
+            <AppHeader />
+            <div className="flex h-screen overflow-hidden border-collapse">
+              <Sidebar />
+              <main
+                className="
                 min-h-screen flex-1
                 overflow-y-auto overflow-x-hidden
                 py-24 px-8
                 bg-secondary/20
                 flex flex-col
               "
-            >
-              {children}
-            </main>
-          </div>
-          <Toaster />
-        </ThemeProvider>
+              >
+                {children}
+              </main>
+            </div>
+            <Toaster />
+          </ThemeProvider>
+        </NuqsAdapter>
       </body>
     </html>
   );

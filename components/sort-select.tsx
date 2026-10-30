@@ -1,6 +1,6 @@
 "use client";
 
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { useQueryState } from "nuqs";
 import {
   Select,
   SelectContent,
@@ -9,38 +9,25 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { sortParser } from "@/features/ticket/search-params-cache";
 
 type Option =
   { label: "Newest"; value: "newest" } | { label: "Bounty"; value: "bounty" };
 
 interface SortSelectProps {
-  defaultValue: string;
   options: Option[];
   width: string;
 }
 
-const SortSelect = ({ options, defaultValue, width }: SortSelectProps) => {
-  const searchParams = useSearchParams();
-  const pathname = usePathname();
-  const { replace } = useRouter();
+const SortSelect = ({ options, width }: SortSelectProps) => {
+  const [sort, setSort] = useQueryState("sort", sortParser);
 
-  const handleSortChange = (value: string | null) => {
-    const params = new URLSearchParams(searchParams);
-
-    if (value && value !== defaultValue) {
-      params.set("sort", value);
-    } else {
-      params.delete("sort");
-    }
-    replace(`${pathname}?${params.toString()}`, { scroll: false });
+  const handleSortChange = async (value: string | null) => {
+    await setSort(value);
   };
 
   return (
-    <Select
-      items={options}
-      value={searchParams.get("sort")?.toString() || defaultValue}
-      onValueChange={handleSortChange}
-    >
+    <Select items={options} value={sort} onValueChange={handleSortChange}>
       <SelectTrigger className={`w-${width}`}>
         <SelectValue placeholder="Sort" />
       </SelectTrigger>
