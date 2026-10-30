@@ -10,7 +10,6 @@ import { homePath, signInPath, signUpPath } from "@/lib/paths";
 import { cn } from "@/lib/utils";
 
 export default function AppHeader() {
-  // const { user } = await getAuth();  => makes all pages dynamic
   const { user, isFetched } = useAuth();
 
   if (!isFetched) return null;

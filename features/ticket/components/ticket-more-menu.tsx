@@ -57,18 +57,6 @@ export function TicketMoreMenu({ ticket, trigger }: TicketMoreMenuProps) {
             : "Failed to update ticket status.",
       })
       .catch(() => undefined);
-    // const result = await updateTicketStatus(ticket.id, value);
-    // if (result.status === "ERROR") {
-    //   toast.add({
-    //     type: "error",
-    //     title: result.message,
-    //   });
-    // } else if (result.status === "SUCCESS") {
-    //   toast.add({
-    //     type: "success",
-    //     title: result.message,
-    //   });
-    // }
   };
 
   const ticketStatusRadioGroup = (

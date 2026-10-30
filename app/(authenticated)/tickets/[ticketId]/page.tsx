@@ -20,7 +20,6 @@ export default async function TicketPage({ params }: TicketPageProps) {
       <Breadcrumbs
         breadcrumbs={[
           { title: "Tickets", href: homePath },
-          // { title: "My Tickets", href: ticketsPath },
           { title: ticket.title },
         ]}
       />

@@ -1,6 +1,6 @@
 "use client";
 
-import { useQueryState } from "nuqs";
+import { useQueryStates } from "nuqs";
 import {
   Select,
   SelectContent,
@@ -9,10 +9,9 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { sortParser } from "@/features/ticket/search-params-cache";
+import { sortOptions, sortParser } from "@/features/ticket/search-params-cache";
 
-type Option =
-  { label: "Newest"; value: "newest" } | { label: "Bounty"; value: "bounty" };
+type Option = { label: string; sortKey: string; sortValue: "desc" | "asc" };
 
 interface SortSelectProps {
   options: Option[];
@@ -20,21 +19,39 @@ interface SortSelectProps {
 }
 
 const SortSelect = ({ options, width }: SortSelectProps) => {
-  const [sort, setSort] = useQueryState("sort", sortParser);
+  const [sort, setSort] = useQueryStates(sortParser, sortOptions);
 
-  const handleSortChange = async (value: string | null) => {
-    await setSort(value);
+  const handleSortChange = async (compositeKey: string | null) => {
+    if (!compositeKey) return;
+
+    const [sortKey, sortValue] = compositeKey.split("_");
+
+    await setSort({
+      sortKey,
+      sortValue,
+    });
   };
+  const items = options.map((option) => ({
+    label: option.label,
+    value: `${option.sortKey}_${option.sortValue}`,
+  }));
 
   return (
-    <Select items={options} value={sort} onValueChange={handleSortChange}>
+    <Select
+      items={items}
+      value={`${sort.sortKey}_${sort.sortValue}`}
+      onValueChange={handleSortChange}
+    >
       <SelectTrigger className={`w-${width}`}>
         <SelectValue placeholder="Sort" />
       </SelectTrigger>
       <SelectContent>
         <SelectGroup>
           {options.map((option) => (
-            <SelectItem key={option.value} value={option.value}>
+            <SelectItem
+              key={option.sortKey + option.sortValue}
+              value={`${option.sortKey}_${option.sortValue}`}
+            >
               {option.label}
             </SelectItem>
           ))}

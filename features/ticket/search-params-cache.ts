@@ -4,14 +4,20 @@ const searchParser = parseAsString
   .withDefault("")
   .withOptions({ shallow: false, clearOnDefault: true });
 
-const sortParser = parseAsString
-  .withDefault("newest")
-  .withOptions({ shallow: false, clearOnDefault: true });
+const sortParser = {
+  sortKey: parseAsString.withDefault("createdAt"),
+  sortValue: parseAsString.withDefault("desc"),
+};
 
 const searchParamsCache = createSearchParamsCache({
   search: searchParser,
-  sort: sortParser,
+  ...sortParser,
 });
 
-export { searchParamsCache, searchParser, sortParser };
+const sortOptions = {
+  shallow: false,
+  clearOnDefault: true,
+};
+
+export { searchParamsCache, searchParser, sortOptions, sortParser };
 export type ParsedSearchParams = ReturnType<typeof searchParamsCache.parse>;

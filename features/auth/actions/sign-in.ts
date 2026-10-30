@@ -33,7 +33,6 @@ const signIn = async (_actionState: ActionState, formData: FormData) => {
     const user = await prisma.user.findUnique({
       where: { email },
     });
-    console.log("sign-in action", Object.fromEntries(formData));
     if (!user) {
       return toActionState("ERROR", "Incorrect email or password.", formData);
     }
